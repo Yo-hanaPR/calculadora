@@ -1,10 +1,15 @@
 import React from 'react'
 import '../stylesheets/Pantalla.css'
 
-function Pantalla({input}){
+function Pantalla({input, history}){
     return(
+        
         <div className='input'>
-        {input}
+            
+            <p className='input_history'>{history}</p>
+            <p >
+                {input}
+            </p>
         </div>
     )
 }

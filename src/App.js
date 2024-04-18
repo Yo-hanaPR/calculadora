@@ -8,7 +8,7 @@ import {useState} from 'react'
 import {evaluate} from 'mathjs'
 
 function App() {
-
+  const [history, setHistory]= useState('');
   const [input, setInput]= useState('');
 
   const agregarInput = val => {
@@ -16,15 +16,19 @@ function App() {
   };
   const calcularResultado= val =>{
     if(input){
-
-      setInput(evaluate(input));
+      if(input.includes('/0')){
+        setInput("No se puede dividir entre cero")
+      }else{
+        setHistory(input);
+        setInput(evaluate(input));
+      }
     }else{
       alert("porfavor ingrese valores para realizar los cálculos")
     }
   };
-
   return (
     <div className="App">
+      
       <div className='logo-contenedor'>
         <img alt="imagen de yohanna" 
         src={php}
@@ -33,7 +37,7 @@ function App() {
       </div>
       <div className='contenedor-calculadora'>
 
-        <Pantalla input={input}></Pantalla>
+        <Pantalla input={input} history={history}></Pantalla>
         <div className='fila'>
           <Boton manejarClic={agregarInput}>
             1
@@ -91,7 +95,7 @@ function App() {
           </Boton>
         </div>
         <div className='fila'>
-          <BotonClear manejarClear={()=> setInput('')}>
+          <BotonClear manejarClear={()=>{setInput(''); setHistory('');} }>
             Clear
           </BotonClear>
         </div>
