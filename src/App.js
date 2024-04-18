@@ -1,8 +1,8 @@
 
 import './App.css';
-import php from './imagenes/php.png';
 import Boton from './componentes/Boton'
 import Pantalla from './componentes/Pantalla'
+import Logo from './componentes/Logo'
 import BotonClear from './componentes/BotonClear'
 import {useState} from 'react'
 import {evaluate} from 'mathjs'
@@ -14,13 +14,20 @@ function App() {
   const agregarInput = val => {
     setInput(input+val);
   };
+  const regex = /[+\-*/]{2,}/;
   const calcularResultado= val =>{
     if(input){
       if(input.includes('/0')){
         setInput("No se puede dividir entre cero")
       }else{
-        setHistory(input);
-        setInput(evaluate(input));
+
+        if (regex.test(input)) {
+          setInput('Expresión no válida: Operadores consecutivos.');
+        }else{
+          setHistory(input);
+          setInput(evaluate(input));
+        }
+        
       }
     }else{
       alert("porfavor ingrese valores para realizar los cálculos")
@@ -29,12 +36,7 @@ function App() {
   return (
     <div className="App">
       
-      <div className='logo-contenedor'>
-        <img alt="imagen de yohanna" 
-        src={php}
-        className='logo'
-        />
-      </div>
+      <Logo />
       <div className='contenedor-calculadora'>
 
         <Pantalla input={input} history={history}></Pantalla>
